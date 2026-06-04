@@ -1,0 +1,25 @@
+{
+  "name": "conversation-summary",
+  "version": "0.1.0",
+  "description": "Summarize raw conversation or run logs into decisions, actions, blockers, and candidate hints.",
+  "risk_level": "review_required",
+  "owner_skill": "meta-agent",
+  "inputs": [
+    { "name": "source_path", "type": "path", "required": true, "description": "Raw conversation or run log." },
+    { "name": "source_type", "type": "string", "required": true, "description": "Source type." }
+  ],
+  "outputs": [
+    { "name": "summary", "type": "markdown|json", "description": "Structured summary." }
+  ],
+  "steps": [
+    { "name": "load_source", "description": "Load source log.", "on_failure": "block" },
+    { "name": "screen_sensitive_content", "description": "Screen sensitive content.", "on_failure": "block" },
+    { "name": "summarize_decisions", "description": "Summarize decisions and why.", "on_failure": "continue_with_warning" },
+    { "name": "summarize_actions", "description": "Summarize actions and blockers.", "on_failure": "continue_with_warning" },
+    { "name": "write_summary", "description": "Write summary.", "on_failure": "block" }
+  ],
+  "evidence_policy": {
+    "must_include": ["source_path", "source_type", "sensitive_status", "topics", "decisions"],
+    "forbid_claims_when_insufficient": ["write_memory_without_candidate_review"]
+  }
+}

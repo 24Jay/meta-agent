@@ -1,0 +1,20 @@
+[
+  {
+    "workflow_id": "research-agent:research-summary",
+    "agent_id": "research-agent",
+    "name": "research-summary",
+    "version": "0.1.0",
+    "description": "Summarize public references with citations.",
+    "risk_level": "read_only",
+    "status": "example"
+  },
+  {
+    "workflow_id": "data-agent:data-profile",
+    "agent_id": "data-agent",
+    "name": "data-profile",
+    "version": "0.1.0",
+    "description": "Profile a sanitized local dataset.",
+    "risk_level": "read_only",
+    "status": "example"
+  }
+]

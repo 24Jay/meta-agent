@@ -1,0 +1,15 @@
+[
+  {
+    "feedback_id": "fb_example_001",
+    "agent_id": "research-agent",
+    "target_type": "report",
+    "target_ref": "examples/reports/research-summary.md",
+    "rating": 5,
+    "correction": null,
+    "encouragement": "The report clearly separated evidence from recommendations.",
+    "reason": "This behavior should be preserved in future reports.",
+    "suggested_destination": "memory",
+    "risk_level": "review_required",
+    "status": "proposed"
+  }
+]

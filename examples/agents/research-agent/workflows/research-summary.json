@@ -1,0 +1,24 @@
+{
+  "name": "research-summary",
+  "version": "0.1.0",
+  "description": "Summarize public or sanitized references with evidence separated from recommendations.",
+  "risk_level": "read_only",
+  "owner_skill": "research-agent",
+  "inputs": [
+    { "name": "topic", "type": "string", "required": true, "description": "Research topic." },
+    { "name": "source_policy", "type": "string", "required": true, "description": "Allowed source boundary." }
+  ],
+  "outputs": [
+    { "name": "summary_report", "type": "markdown", "description": "Research summary with Evidence and Recommendations sections." }
+  ],
+  "steps": [
+    { "name": "confirm_source_boundary", "description": "Confirm that only public or sanitized sources are used.", "on_failure": "block" },
+    { "name": "collect_references", "description": "Collect allowed references or provided sanitized notes.", "on_failure": "continue_with_warning" },
+    { "name": "separate_evidence", "description": "Separate cited evidence from interpretation.", "on_failure": "block" },
+    { "name": "emit_summary", "description": "Write a report with explicit evidence, recommendations, limitations, and next steps.", "on_failure": "block" }
+  ],
+  "evidence_policy": {
+    "must_include": ["topic", "source_policy", "evidence", "recommendations", "known_limitations"],
+    "forbid_claims_when_insufficient": ["claim_exhaustive_coverage", "claim_production_ready_without_review"]
+  }
+}

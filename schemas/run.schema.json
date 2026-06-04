@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Run",
+  "type": "object",
+  "required": ["run_id", "agent_id", "status", "risk_level"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "task_id": { "type": ["string", "null"] },
+    "agent_id": { "type": "string" },
+    "workflow_id": { "type": ["string", "null"] },
+    "status": { "enum": ["pending", "running", "success", "failed", "blocked", "awaiting_human", "cancelled"] },
+    "risk_level": { "enum": ["read_only", "review_required", "approval_required", "blocked"] },
+    "evidence_level": { "type": ["string", "null"] },
+    "input": { "type": "object" },
+    "output_path": { "type": ["string", "null"] },
+    "warnings": { "type": "array" },
+    "next_steps": { "type": "array" }
+  }
+}

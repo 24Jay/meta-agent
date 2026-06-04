@@ -1,0 +1,8 @@
+id: data-agent
+name: Data Agent
+role: A sanitized example agent for read-only dataset profiling.
+maturity_level: L2
+default_provider: mock
+default_risk_level: read_only
+knowledge_index: ./knowledge/README.md
+workflow_dir: ./workflows

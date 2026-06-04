@@ -1,0 +1,16 @@
+id: example-agent
+name: Example Agent
+role: Describe the agent's professional domain and responsibility.
+maturity_level: L1
+default_provider: mock
+default_model: mock-model
+default_risk_level: read_only
+knowledge_index: ./knowledge/README.md
+workflow_dir: ./workflows
+memory:
+  mode: markdown
+  path: ./memory
+tools:
+  - name: list-workflows
+    type: cli
+    command: example-agent list-workflows --format json

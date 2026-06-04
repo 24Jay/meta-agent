@@ -1,0 +1,27 @@
+{
+  "name": "agent-feedback-loop",
+  "version": "0.1.0",
+  "description": "Capture human ratings, corrections, and encouragement as reviewable feedback events.",
+  "risk_level": "review_required",
+  "owner_skill": "meta-agent",
+  "inputs": [
+    { "name": "agent_id", "type": "string", "required": true, "description": "Target agent." },
+    { "name": "target_ref", "type": "string", "required": true, "description": "Target output, run, or artifact." },
+    { "name": "reason", "type": "string", "required": true, "description": "Why this feedback matters." }
+  ],
+  "outputs": [
+    { "name": "feedback_event", "type": "json", "description": "Feedback event with status proposed." }
+  ],
+  "steps": [
+    { "name": "capture_feedback", "description": "Capture rating, correction, encouragement, and reason.", "on_failure": "block" },
+    { "name": "classify_destination", "description": "Classify destination: memory, knowledge, workflow, roadmap, code, or ignore.", "on_failure": "continue_with_warning" },
+    { "name": "emit_feedback_event", "description": "Write proposed feedback event.", "on_failure": "block" }
+  ],
+  "approval_points": [
+    { "name": "HITL:FEEDBACK_APPLY", "description": "Required before applying feedback to memory, knowledge, workflow, or code." }
+  ],
+  "evidence_policy": {
+    "must_include": ["agent_id", "target_ref", "reason", "suggested_destination", "risk_level"],
+    "forbid_claims_when_insufficient": ["auto_apply_feedback_without_review"]
+  }
+}

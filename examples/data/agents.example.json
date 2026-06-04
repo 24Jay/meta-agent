@@ -1,0 +1,24 @@
+[
+  {
+    "agent_id": "research-agent",
+    "name": "Research Agent",
+    "role": "Sanitized technical research assistant",
+    "maturity_level": "L2",
+    "status": "active",
+    "default_risk_level": "read_only",
+    "workspace_path": "examples/agents/research-agent",
+    "workflow_specs_path": "examples/agents/research-agent/workflows",
+    "connector_commands": ["research-agent list-workflows --format json"]
+  },
+  {
+    "agent_id": "data-agent",
+    "name": "Data Agent",
+    "role": "Sanitized read-only data profiling assistant",
+    "maturity_level": "L2",
+    "status": "active",
+    "default_risk_level": "read_only",
+    "workspace_path": "examples/agents/data-agent",
+    "workflow_specs_path": "examples/agents/data-agent/workflows",
+    "connector_commands": ["data-agent list-workflows --format json"]
+  }
+]

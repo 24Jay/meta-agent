@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FeedbackEvent",
+  "type": "object",
+  "required": ["feedback_id", "agent_id", "target_type", "target_ref", "reason", "suggested_destination", "risk_level", "status"],
+  "properties": {
+    "feedback_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "target_type": { "type": "string" },
+    "target_ref": { "type": "string" },
+    "rating": { "type": ["integer", "null"], "minimum": 1, "maximum": 5 },
+    "correction": { "type": ["string", "null"] },
+    "encouragement": { "type": ["string", "null"] },
+    "reason": { "type": "string" },
+    "suggested_destination": { "enum": ["memory", "knowledge", "workflow", "roadmap", "code", "ignore"] },
+    "risk_level": { "enum": ["read_only", "review_required", "approval_required", "blocked"] },
+    "status": { "enum": ["proposed", "reviewed", "applied", "rejected"] }
+  }
+}

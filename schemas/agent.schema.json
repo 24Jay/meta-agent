@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/meta-agent/schemas/agent.schema.json",
+  "title": "Agent",
+  "type": "object",
+  "required": ["agent_id", "name", "role", "maturity_level", "status", "default_risk_level"],
+  "properties": {
+    "agent_id": { "type": "string" },
+    "name": { "type": "string" },
+    "role": { "type": "string" },
+    "workspace_path": { "type": ["string", "null"] },
+    "maturity_level": { "type": "string" },
+    "status": { "enum": ["active", "paused", "deprecated"] },
+    "default_risk_level": { "enum": ["read_only", "review_required", "approval_required", "blocked"] },
+    "workflow_specs_path": { "type": ["string", "null"] },
+    "connector_commands": { "type": "array", "items": { "type": "string" } }
+  }
+}

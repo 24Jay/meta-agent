@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeSource",
+  "type": "object",
+  "required": ["source_id", "agent_id", "source_type", "title", "uri", "credibility", "credential_redacted", "status"],
+  "properties": {
+    "source_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "source_type": { "enum": ["doc", "wiki", "local_md", "table", "repo_doc", "report", "dashboard", "other"] },
+    "title": { "type": "string" },
+    "uri": { "type": "string" },
+    "owner": { "type": ["string", "null"] },
+    "credibility": { "enum": ["low", "medium", "high", "canonical"] },
+    "credential_redacted": { "type": "boolean" },
+    "status": { "enum": ["proposed", "approved", "ingested", "stale", "rejected"] }
+  }
+}

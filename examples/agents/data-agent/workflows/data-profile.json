@@ -1,0 +1,23 @@
+{
+  "name": "data-profile",
+  "version": "0.1.0",
+  "description": "Profile a sanitized local dataset without external side effects.",
+  "risk_level": "read_only",
+  "owner_skill": "data-agent",
+  "inputs": [
+    { "name": "dataset_path", "type": "path", "required": true, "description": "Path to a sanitized local dataset." }
+  ],
+  "outputs": [
+    { "name": "profile_report", "type": "markdown", "description": "Dataset profile summary." }
+  ],
+  "steps": [
+    { "name": "confirm_sanitized_dataset", "description": "Confirm the dataset is sanitized and local.", "on_failure": "block" },
+    { "name": "inspect_schema", "description": "Inspect columns and basic types.", "on_failure": "continue_with_warning" },
+    { "name": "summarize_quality", "description": "Summarize missing values, ranges, and notable limitations.", "on_failure": "continue_with_warning" },
+    { "name": "emit_profile", "description": "Write a read-only profile report.", "on_failure": "block" }
+  ],
+  "evidence_policy": {
+    "must_include": ["dataset_path", "schema_summary", "quality_summary", "known_limitations"],
+    "forbid_claims_when_insufficient": ["claim_dataset_is_representative", "claim_production_ready_without_review"]
+  }
+}

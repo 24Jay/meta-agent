@@ -1,0 +1,10 @@
+{
+  "agent_id": "example-agent",
+  "connector_type": "cli",
+  "commands": {
+    "list_workflows": "example-agent list-workflows --format json",
+    "list_runs": "example-agent list-runs --format json",
+    "run_workflow": "example-agent run-workflow {workflow} --format json --output {output}",
+    "submit_feedback": "example-agent submit-feedback --input {feedback_json}"
+  }
+}

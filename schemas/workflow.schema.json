@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/meta-agent/schemas/workflow.schema.json",
+  "title": "Workflow",
+  "type": "object",
+  "required": ["name", "version", "description", "risk_level", "steps"],
+  "properties": {
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "risk_level": { "enum": ["read_only", "review_required", "approval_required", "blocked"] },
+    "owner_skill": { "type": ["string", "null"] },
+    "cli": { "type": ["string", "null"] },
+    "inputs": { "type": "array" },
+    "outputs": { "type": "array" },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "on_failure": { "type": "string" }
+        }
+      }
+    },
+    "approval_points": { "type": "array" },
+    "evidence_policy": { "type": "object" },
+    "failure_policy": { "type": "object" }
+  }
+}

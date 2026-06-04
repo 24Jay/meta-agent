@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Approval",
+  "type": "object",
+  "required": ["approval_id", "agent_id", "target_type", "target_ref", "risk_level", "status", "scope"],
+  "properties": {
+    "approval_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "target_type": { "type": "string" },
+    "target_ref": { "type": "string" },
+    "risk_level": { "enum": ["review_required", "approval_required", "blocked"] },
+    "requested_by": { "type": ["string", "null"] },
+    "approved_by": { "type": ["string", "null"] },
+    "status": { "enum": ["pending", "approved", "rejected", "expired", "cancelled"] },
+    "scope": { "type": "string" },
+    "rollback_note": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "agent-design-review",
+  "version": "0.1.0",
+  "description": "Review whether an agent has clear role, knowledge, memory, workflows, tools, evidence policy, risk policy, and delivery path.",
+  "risk_level": "read_only",
+  "owner_skill": "meta-agent",
+  "inputs": [
+    { "name": "agent_path", "type": "path", "required": true, "description": "Path to the agent workspace." }
+  ],
+  "outputs": [
+    { "name": "review_report", "type": "json|markdown", "description": "Maturity level, strengths, gaps, and next steps." }
+  ],
+  "steps": [
+    { "name": "inspect_agent_definition", "description": "Check role and boundary documents.", "on_failure": "continue_with_warning" },
+    { "name": "inspect_knowledge", "description": "Check knowledge index and source policy.", "on_failure": "continue_with_warning" },
+    { "name": "inspect_workflows", "description": "Check workflow specs and run records.", "on_failure": "continue_with_warning" },
+    { "name": "inspect_tools", "description": "Check stable CLI/API/tool connectors.", "on_failure": "continue_with_warning" },
+    { "name": "score_maturity", "description": "Score L0-L6 maturity.", "on_failure": "block" },
+    { "name": "emit_report", "description": "Write review report.", "on_failure": "block" }
+  ],
+  "evidence_policy": {
+    "must_include": ["agent_path", "maturity_level", "strengths", "gaps", "next_steps", "risk_level"],
+    "forbid_claims_when_insufficient": ["claim_production_ready_without_run_records"]
+  }
+}

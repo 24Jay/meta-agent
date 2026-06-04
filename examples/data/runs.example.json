@@ -1,0 +1,20 @@
+[
+  {
+    "run_id": "run_example_001",
+    "task_id": "task_example_research_summary",
+    "agent_id": "research-agent",
+    "workflow_id": "research-agent:research-summary",
+    "status": "success",
+    "risk_level": "read_only",
+    "evidence_level": "cited",
+    "input": {
+      "topic": "professional agent design",
+      "source_policy": "public_or_sanitized_only"
+    },
+    "output_path": "examples/reports/research-summary.md",
+    "warnings": [],
+    "next_steps": [
+      "Ask a human reviewer whether the evidence/recommendation separation should become a reusable memory."
+    ]
+  }
+]

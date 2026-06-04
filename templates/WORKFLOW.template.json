@@ -1,0 +1,30 @@
+{
+  "name": "example-workflow",
+  "version": "0.1.0",
+  "description": "Describe the repeatable task.",
+  "risk_level": "read_only",
+  "owner_skill": "example-agent",
+  "inputs": [],
+  "outputs": [],
+  "steps": [
+    {
+      "name": "load_context",
+      "description": "Load required context.",
+      "on_failure": "block"
+    },
+    {
+      "name": "run_analysis",
+      "description": "Run read-only analysis.",
+      "on_failure": "block"
+    },
+    {
+      "name": "emit_report",
+      "description": "Emit structured output.",
+      "on_failure": "block"
+    }
+  ],
+  "evidence_policy": {
+    "must_include": ["data_source", "evidence_level", "risk_level", "known_limitations", "next_steps"],
+    "forbid_claims_when_insufficient": ["production_ready_without_approval"]
+  }
+}

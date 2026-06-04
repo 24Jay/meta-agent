@@ -1,0 +1,8 @@
+id: research-agent
+name: Research Agent
+role: A sanitized example agent for literature and technical research.
+maturity_level: L2
+default_provider: mock
+default_risk_level: read_only
+knowledge_index: ./knowledge/README.md
+workflow_dir: ./workflows

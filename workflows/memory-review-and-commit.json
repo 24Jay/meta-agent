@@ -1,0 +1,28 @@
+{
+  "name": "memory-review-and-commit",
+  "version": "0.1.0",
+  "description": "Review candidates before committing them to memory, knowledge, roadmap, workflow, task, or feedback store.",
+  "risk_level": "review_required",
+  "owner_skill": "meta-agent",
+  "inputs": [
+    { "name": "candidate_path", "type": "path", "required": true, "description": "Candidate JSON." },
+    { "name": "destination", "type": "string", "required": true, "description": "Confirmed destination." }
+  ],
+  "outputs": [
+    { "name": "commit_result", "type": "json|markdown", "description": "Commit result or skip reason." }
+  ],
+  "steps": [
+    { "name": "load_candidate", "description": "Load candidate.", "on_failure": "block" },
+    { "name": "human_review", "description": "Require human review.", "on_failure": "block" },
+    { "name": "deduplicate", "description": "Check duplicates and conflicts.", "on_failure": "continue_with_warning" },
+    { "name": "check_sensitive_content", "description": "Block secrets and private data.", "on_failure": "block" },
+    { "name": "write_destination", "description": "Write to confirmed destination.", "on_failure": "block" }
+  ],
+  "approval_points": [
+    { "name": "HITL:MEMORY_COMMIT", "description": "Required before long-term memory or knowledge commit." }
+  ],
+  "evidence_policy": {
+    "must_include": ["candidate_id", "destination", "human_review_status", "sensitive_status"],
+    "forbid_claims_when_insufficient": ["commit_without_human_review"]
+  }
+}

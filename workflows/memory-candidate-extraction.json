@@ -1,0 +1,23 @@
+{
+  "name": "memory-candidate-extraction",
+  "version": "0.1.0",
+  "description": "Extract memory, knowledge, task, and feedback candidates from a summary, including not_memory items.",
+  "risk_level": "review_required",
+  "owner_skill": "meta-agent",
+  "inputs": [
+    { "name": "summary_path", "type": "path", "required": true, "description": "Conversation or run summary." }
+  ],
+  "outputs": [
+    { "name": "candidates", "type": "json", "description": "Candidate items pending review." }
+  ],
+  "steps": [
+    { "name": "load_summary", "description": "Load summary.", "on_failure": "block" },
+    { "name": "extract_candidates", "description": "Extract candidate items.", "on_failure": "continue_with_warning" },
+    { "name": "classify_not_memory", "description": "Mark temporary or unsuitable items as not_memory.", "on_failure": "continue_with_warning" },
+    { "name": "write_candidates", "description": "Write candidates.", "on_failure": "block" }
+  ],
+  "evidence_policy": {
+    "must_include": ["source_summary", "candidate_type", "content", "why", "risk_level"],
+    "forbid_claims_when_insufficient": ["auto_commit_candidate"]
+  }
+}

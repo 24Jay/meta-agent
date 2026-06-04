@@ -1,0 +1,13 @@
+[
+  {
+    "candidate_id": "memcand_example_001",
+    "candidate_type": "feedback",
+    "target_agent": "research-agent",
+    "content": "Keep separating evidence from recommendations in research reports.",
+    "why": "A human reviewer explicitly praised this behavior.",
+    "how_to_apply": "Use separate Evidence and Recommendations sections in future reports.",
+    "confidence": "high",
+    "risk_level": "review_required",
+    "status": "proposed"
+  }
+]

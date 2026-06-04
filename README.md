@@ -1,5 +1,7 @@
 # meta-agent
 
+English | [简体中文](README.zh-CN.md)
+
 meta-agent helps teams design professional AI agents that are reviewable, evidence-aware, risk-bounded, and continuously improved through human feedback.
 
 Most agent frameworks focus on orchestration: how agents call tools, talk to each other, or execute tasks. meta-agent focuses on the engineering layer around professional agents: how they are specified, reviewed, governed, evaluated, and improved over time.
@@ -69,7 +71,7 @@ meta-agent/
 Clone the repository, inspect the methodology assets, and validate the project assets:
 
 ```bash
-git clone https://github.com/<owner>/meta-agent.git
+git clone https://github.com/24Jay/meta-agent.git
 cd meta-agent
 PYTHONPATH=src python3 -m meta_agent validate .
 PYTHONPATH=src python3 -m meta_agent inspect-project . --format json

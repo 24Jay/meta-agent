@@ -13,6 +13,7 @@ PYTHONPATH=src python3 -m meta_agent --version
 PYTHONPATH=src python3 -m meta_agent init example-agent --output-dir /tmp
 PYTHONPATH=src python3 -m meta_agent validate .
 PYTHONPATH=src python3 -m meta_agent inspect-project .
+PYTHONPATH=src python3 -m meta_agent readiness .
 PYTHONPATH=src python3 -m meta_agent report-project . --output /tmp/meta-agent-report.md
 PYTHONPATH=src python3 -m meta_agent list-workflows .
 PYTHONPATH=src python3 -m meta_agent explain-workflow workflows/agent-design-review.json
@@ -79,6 +80,32 @@ Example:
 meta-agent inspect-project .
 meta-agent inspect-project . --format json
 ```
+
+### `meta-agent readiness [path]`
+
+Checks whether a meta-agent project is ready to publish, review, or operate.
+
+This command is read-only. It composes project validation, project inspection, public documentation checks, CI/test/example presence checks, optional agent review, and feedback/memory review state.
+
+Example:
+
+```bash
+meta-agent readiness .
+meta-agent readiness . --format json
+meta-agent readiness . --agent examples/agents/research-agent --fail-under 90
+meta-agent readiness . --strict
+```
+
+The output includes:
+
+- `status`: `ready`, `needs-work`, or `blocked`
+- `score`: readiness score from 0 to 100
+- `checks`: individual pass/fail checks
+- `blockers`
+- `warnings`
+- `next_steps`
+
+Exit code is `0` when ready, `2` when the project needs work or misses a threshold, and `1` for invalid paths or fatal errors.
 
 ### `meta-agent report-project [path]`
 

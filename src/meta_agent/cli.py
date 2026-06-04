@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .inspector import format_inspection_text, inspect_project
 from .memory_ops import commit_candidate_to_markdown, feedback_to_memory_candidate, load_feedback_event, load_memory_candidate, review_memory_candidate, write_candidate
+from .readiness import build_readiness_report, format_readiness_text
 from .reporter import build_project_report, format_project_report_markdown
 from .reviewer import format_review_markdown, review_agent
 from .runner import create_run_record, format_run_record_text
@@ -62,6 +63,20 @@ def command_inspect_project(args):
     else:
         print(format_inspection_text(summary), end="")
     return 0 if not summary.get("warnings") else 2
+
+
+def command_readiness(args):
+    try:
+        report = build_readiness_report(args.path, agent_path=args.agent, fail_under=args.fail_under, strict=args.strict)
+    except Exception as exc:
+        print(f"FAIL {exc}", file=sys.stderr)
+        return 1
+
+    if args.format == "json":
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+    else:
+        print(format_readiness_text(report), end="")
+    return 0 if report.get("passed") else 2
 
 
 def command_list_workflows(args):
@@ -244,6 +259,14 @@ def build_parser():
     inspect.add_argument("path", nargs="?", default=".", help="Project root to inspect.")
     inspect.add_argument("--format", choices=["text", "json"], default="text")
     inspect.set_defaults(func=command_inspect_project)
+
+    readiness = subparsers.add_parser("readiness", help="Check whether a meta-agent project is ready to publish or operate.")
+    readiness.add_argument("path", nargs="?", default=".", help="Project root to check.")
+    readiness.add_argument("--agent", default=None, help="Optional agent workspace to review as part of readiness.")
+    readiness.add_argument("--format", choices=["text", "json"], default="text")
+    readiness.add_argument("--fail-under", type=int, default=None, help="Fail when readiness score is below this 0-100 threshold.")
+    readiness.add_argument("--strict", action="store_true", help="Treat inspection warnings as blockers.")
+    readiness.set_defaults(func=command_readiness)
 
     report = subparsers.add_parser("report-project", help="Generate a project report from validation and inspection data.")
     report.add_argument("path", nargs="?", default=".", help="Project root to report.")

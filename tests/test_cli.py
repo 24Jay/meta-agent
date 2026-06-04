@@ -61,6 +61,35 @@ class CliTest(unittest.TestCase):
             self.assertTrue(output_path.exists())
             self.assertIn("# meta-agent Project Report", output_path.read_text(encoding="utf-8"))
 
+    def test_readiness_text(self):
+        result = run_cli("readiness", ".")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("# meta-agent Readiness Report", result.stdout)
+        self.assertIn("status: ready", result.stdout)
+        self.assertIn("score: 100/100", result.stdout)
+        self.assertIn("feedback_memory_state", result.stdout)
+
+    def test_readiness_json(self):
+        result = run_cli("readiness", ".", "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "ready")
+        self.assertEqual(payload["score"], 100)
+        self.assertTrue(payload["validation"]["ok"])
+        self.assertIn("checks", payload)
+        self.assertTrue(any(check["name"] == "project_validation" for check in payload["checks"]))
+        self.assertTrue(payload["warnings"])
+
+    def test_readiness_fail_under(self):
+        result = run_cli("readiness", ".", "--fail-under", "101")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("below fail-under threshold 101", result.stdout)
+
+    def test_readiness_invalid_path(self):
+        result = run_cli("readiness", "missing-project")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Project path does not exist", result.stderr)
+
     def test_list_workflows_json(self):
         result = run_cli("list-workflows", ".", "--format", "json")
         self.assertEqual(result.returncode, 0, result.stderr)

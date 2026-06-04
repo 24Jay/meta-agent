@@ -75,6 +75,7 @@ git clone https://github.com/24Jay/meta-agent.git
 cd meta-agent
 PYTHONPATH=src python3 -m meta_agent validate .
 PYTHONPATH=src python3 -m meta_agent inspect-project . --format json
+PYTHONPATH=src python3 -m meta_agent readiness .
 PYTHONPATH=src python3 -m meta_agent report-project . --output /tmp/meta-agent-report.md
 PYTHONPATH=src python3 -m meta_agent run-workflow examples/agents/research-agent/workflows/research-summary.json --format json
 PYTHONPATH=src python3 -m meta_agent review examples/agents/research-agent
